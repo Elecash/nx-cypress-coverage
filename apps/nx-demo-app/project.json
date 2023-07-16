@@ -1,0 +1,110 @@
+{
+  "name": "nx-demo-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "nx-demo",
+  "sourceRoot": "apps/nx-demo-app/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/nx-demo-app",
+        "index": "apps/nx-demo-app/src/index.html",
+        "main": "apps/nx-demo-app/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/nx-demo-app/tsconfig.app.json",
+        "assets": [
+          "apps/nx-demo-app/src/favicon.ico",
+          "apps/nx-demo-app/src/assets"
+        ],
+        "styles": ["apps/nx-demo-app/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "nx-demo-app:build:production"
+        },
+        "development": {
+          "browserTarget": "nx-demo-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "serve-nx-demo-app-e2e": {
+      "executor": "ngx-build-plus:dev-server",
+      "defaultConfiguration": "",
+      "options": {
+        "browserTarget": "nx-demo-app:build:development",
+        "extraWebpackConfig": "./webpack.coverage.js",
+        "port": 3000
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "nx-demo-app:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/nx-demo-app/**/*.ts",
+          "apps/nx-demo-app/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/nx-demo-app/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "nx-demo-app:build"
+      }
+    }
+  }
+}
