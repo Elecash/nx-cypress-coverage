@@ -1,3 +1,9 @@
+# E2E code coverage with NX + Cypress + Angular + Istanbul
+
+This is a starter repository to have code coverage with Istanbul in an Angular v16 with Nx and Cypress.
+
+Enjoy!
+
 ## Create NX Workspace
 
 ```
